@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
+import { BiLogoGitHub } from "react-icons/bi";
 import { auth } from "../firebase/firebase";
 import {
   createUserWithEmailAndPassword,
   updateProfile,
   GoogleAuthProvider,
   signInWithPopup,
+  GitHubAuthProvider,
 } from "firebase/auth";
+
 const provider = new GoogleAuthProvider();
+const pprovider = new GitHubAuthProvider();
 
 const RegisterForm = () => {
   const [username, setUsername] = useState(null);
@@ -25,10 +29,17 @@ const RegisterForm = () => {
       console.log("Error occured: " + err);
     }
   };
+  // signInWithGoogle
   const signInWithGoogle = async () => {
     const user = await signInWithPopup(auth, provider);
     console.log(user);
   };
+  // signInWithGitHub
+  const signInWithGitHub = async () => {
+    const user = await signInWithPopup(auth, pprovider);
+    console.log(user);
+  };
+
   return (
     <main className="flex lg:h-[100vh]">
       <div className="w-full lg:w-[60%] p-8 md:p-14 flex items-center justify-center lg:justify-start">
@@ -48,6 +59,15 @@ const RegisterForm = () => {
             <FcGoogle size={22} />
             <span className="font-medium text-black group-hover:text-white">
               Login with Google
+            </span>
+          </div>
+          <div
+            className="bg-black/[0.05] text-white w-full py-4 mt-10 rounded-full transition-transform hover:bg-black/[0.8] active:scale-90 flex justify-center items-center gap-4 cursor-pointer group"
+            onClick={signInWithGitHub}
+          >
+            <BiLogoGitHub size={22} />
+            <span className="font-medium text-black group-hover:text-white">
+              Login with GitHub
             </span>
           </div>
 
