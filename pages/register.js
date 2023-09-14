@@ -26,8 +26,12 @@ const RegisterForm = () => {
     }
   };
   const signInWithGoogle = async () => {
-    const user = await signInWithPopup(auth, provider);
-    console.log(user);
+    try {
+      const user = await signInWithPopup(auth, provider);
+      console.log(user);
+    } catch (err) {
+      console.log("Error occured: " + err);
+    }
   };
   return (
     <main className="flex lg:h-[100vh]">
