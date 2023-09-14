@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { auth } from "../firebase/firebase";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  updateProfile,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
+const provider = new GoogleAuthProvider();
+
 const RegisterForm = () => {
   const [username, setUsername] = useState(null);
   const [email, setEmail] = useState(null);
@@ -18,6 +25,10 @@ const RegisterForm = () => {
       console.log("Error occured: " + err);
     }
   };
+  const signInWithGoogle = async () => {
+    const user = await signInWithPopup(auth, provider);
+    console.log(user);
+  };
   return (
     <main className="flex lg:h-[100vh]">
       <div className="w-full lg:w-[60%] p-8 md:p-14 flex items-center justify-center lg:justify-start">
@@ -30,7 +41,10 @@ const RegisterForm = () => {
             </span>
           </p>
 
-          <div className="bg-black/[0.05] text-white w-full py-4 mt-10 rounded-full transition-transform hover:bg-black/[0.8] active:scale-90 flex justify-center items-center gap-4 cursor-pointer group">
+          <div
+            className="bg-black/[0.05] text-white w-full py-4 mt-10 rounded-full transition-transform hover:bg-black/[0.8] active:scale-90 flex justify-center items-center gap-4 cursor-pointer group"
+            onClick={signInWithGoogle}
+          >
             <FcGoogle size={22} />
             <span className="font-medium text-black group-hover:text-white">
               Login with Google
